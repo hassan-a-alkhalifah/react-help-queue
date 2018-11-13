@@ -4,16 +4,33 @@ import TicketList from './TicketList';
 import NewTicketControl from './NewTicketControl';
 import { Switch, Route } from 'react-router-dom';
 
-function App() {
-  return(
-    <div>
-      <Header/>
-      <Switch>
-        <Route exact path='/' component={TicketList} />
-        <Route exact path='/newTicket' component={NewTicketControl} />
-      </Switch>
-    </div>
-  );
+class App extends React.Component {
+
+  constructor() {
+    super();
+    this.state = {
+      masterTicketList: []
+    };
+    this.handleAddingNewTicketToList = this.handleAddingNewTicketToList.bind(this);
+  }
+
+  handleAddingNewTicketToList(newTicket){
+    var newMasterTicketList = this.state.masterTicketList.slice();
+    newMasterTicketList.push(newTicket);
+    this.setState({masterTicketList: newMasterTicketList});
+  }
+
+  render() {
+    return(
+      <div>
+        <Header/>
+        <Switch>
+          <Route exact path='/' render={()=><TicketList ticketList={this.state.masterTicketList}/>}/>
+          <Route exact path='/newTicket' render={()=><NewTicketControl onNewTicketCreation={this.handleAddingNewTicketToList}/>}/>
+        </Switch>
+      </div>
+    );
+  }
 }
 
 export default App;
