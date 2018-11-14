@@ -3,7 +3,6 @@ import Ticket from './Ticket';
 import PropTypes from 'prop-types';
 
 function TicketList(props) {
-  console.log(props.ticketList);
   return(
     <div>
       {props.ticketList.map((ticket) =>
@@ -11,6 +10,7 @@ function TicketList(props) {
           location={ticket.location}
           names={ticket.names}
           issue={ticket.issue}
+          formattedWaitTime={ticket.formattedWaitTime}
           key={ticket.id}
         />
       )}
